@@ -775,10 +775,11 @@ class ArchimateGenerator(BaseGenerator):
     def _map_element_type(self, element_type: ElementType) -> str:
         mapping = {
             ElementType.CONTAINER: "ApplicationComponent",
-            ElementType.DATABASE: "DataObject",
-            ElementType.QUEUE: "TechnologyService",
-            ElementType.CACHE: "DataObject",
+            ElementType.DATABASE: "TechnologyService",
+            ElementType.QUEUE: "ApplicationInterface",
+            ElementType.CACHE: "TechnologyService",
             ElementType.COMPONENT: "ApplicationComponent",
+            ElementType.DATA_OBJECT: "DataObject",
         }
         return mapping[element_type]
 

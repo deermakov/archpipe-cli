@@ -16,6 +16,7 @@ class ElementType(str, Enum):
     QUEUE = "queue"
     CACHE = "cache"
     COMPONENT = "component"
+    DATA_OBJECT = "data_object"
 
 
 class ScalingType(str, Enum):

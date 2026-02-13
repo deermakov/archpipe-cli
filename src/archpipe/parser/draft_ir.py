@@ -233,5 +233,6 @@ def _to_element_type(kind: str) -> ElementType:
         "database": ElementType.DATABASE,
         "queue": ElementType.QUEUE,
         "cache": ElementType.CACHE,
+        "data_object": ElementType.DATA_OBJECT,
     }
     return mapping.get(kind.lower(), ElementType.CONTAINER)
