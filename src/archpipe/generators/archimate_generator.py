@@ -825,8 +825,7 @@ class ArchimateGenerator(BaseGenerator):
                 return "Access"
 
         # IR relationships are directed as consumer -> provider in most HLDs.
-        # "UsedBy" matches this direction better than "Serving".
-        return "UsedBy"
+        return "Serving"
 
     def _add_element(
         self,
