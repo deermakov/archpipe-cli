@@ -1,0 +1,17 @@
+services:
+  archpipe:
+    build:
+      context: .
+      dockerfile: docker/archpipe/Dockerfile
+    image: archpipe-cli:local
+    working_dir: /work
+    volumes:
+      - ./:/work
+    entrypoint: ["archpipe"]
+
+  archi-export:
+    image: ghcr.io/woozymasta/archimate-ci-image:latest
+    platform: linux/amd64
+    working_dir: /work
+    volumes:
+      - ./:/work

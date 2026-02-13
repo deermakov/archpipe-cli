@@ -1,0 +1,75 @@
+name: "corp-cyan"
+
+plantuml:
+  background_color: "#FFFFFF"
+  boundary_color: "#2E6171"
+  line_color: "#1F2937"
+  internal_bg: "#CCF6FB"
+  external_bg: "#F2FDFF"
+  text_color: "#111111"
+  font_name: "Segoe UI"
+  dpi: 180
+  ranksep: 150
+  nodesep: 80
+
+c4:
+  internal_bg: "#CCF6FB"
+  external_bg: "#F2FDFF"
+  text_color: "#111111"
+  stroke_color: "#2E6171"
+  auto_layout: "lr"
+
+archimate:
+  include_layer_properties: true
+  include_tag_properties: true
+  include_organizations: true
+  include_viewpoints_file: true
+
+diagram:
+  # Enforce `kind:*` tags (recommended for IR-first workflows).
+  require_kind_tags: true
+  kind_tag_key: "kind"
+
+  # Optional palette for draw.io (fillColor by kind).
+  kind_fill_colors:
+    client: "#FFF2CC"
+    process: "#CCF6FB"
+    read: "#DAE8FC"
+    data: "#F8CECC"
+    async: "#D5E8D4"
+    rules: "#E1D5E7"
+    product: "#F5F5F5"
+    ops: "#E7F5FF"
+
+  # View selection rules + readability limits (nodes/edges).
+  views:
+    context:
+      include_kinds: ["client", "process", "read", "async", "rules", "product", "ops"]
+      include_external: true
+      max_nodes: 20
+      max_edges: 30
+    solution:
+      include_kinds: ["client", "process", "rules", "read", "data", "async", "product", "ops"]
+      include_external: true
+      max_nodes: 30
+      max_edges: 60
+    data_async:
+      include_kinds: ["data", "read", "process", "rules", "async", "product", "ops"]
+      include_external: true
+      max_nodes: 25
+      max_edges: 50
+    flow_process:
+      include_kinds: ["client", "process", "rules", "read", "async", "product", "ops"]
+      include_external: true
+      max_nodes: 20
+      max_edges: 35
+    flow_ingestion:
+      include_kinds: ["data", "read", "process", "rules", "ops"]
+      include_external: true
+      max_nodes: 20
+      max_edges: 35
+    operations:
+      include_kinds: ["process", "async", "product", "ops"]
+      include_external: true
+      max_nodes: 20
+      max_edges: 35

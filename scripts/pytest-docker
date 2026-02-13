@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Run tests inside the archpipe container (no host Python tooling required).
+docker compose run --rm --no-deps --entrypoint python archpipe -m pytest "$@"

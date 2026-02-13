@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+usage() {
+  cat <<'EOF'
+archpipe (обёртка репозитория)
+
+Usage:
+  ./archpipe setup
+  ./archpipe generate <FILE.md|DIR> [archpipe options...]
+  ./archpipe validate <FILE.md> [archpipe options...]
+  ./archpipe lint <FILE.md> [archpipe options...]
+  ./archpipe watch <DIR> [archpipe options...]
+  ./archpipe --help
+
+Примеры:
+  ./archpipe setup
+  ./archpipe generate inbox/example.ir.md --format all --output-dir auto --notation standard --force
+  ./archpipe generate inbox --format all --output-dir auto --notation standard --force
+
+Результаты:
+  ./output/<slug>/...
+EOF
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 2
+fi
+
+case "${1:-}" in
+  -h|--help|help)
+    usage
+    exit 0
+    ;;
+esac
+
+cmd="${1:-}"
+shift || true
+
+case "$cmd" in
+  setup)
+    exec "${ROOT_DIR}/scripts/setup"
+    ;;
+  generate|validate|lint|watch|draft-ir|init)
+    exec "${ROOT_DIR}/scripts/archpipe-docker" "$cmd" "$@"
+    ;;
+  version|-V|--version)
+    exec "${ROOT_DIR}/scripts/archpipe-docker" --version
+    ;;
+  *)
+    echo "Неизвестная команда: ${cmd}"
+    echo ""
+    usage
+    exit 2
+    ;;
+esac

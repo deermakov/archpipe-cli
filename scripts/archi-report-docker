@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MODEL_XML="${1:-/work/output/archimate/model.xml}"
+REPORT_DIR="${2:-/work/output/archimate/html-report}"
+
+docker compose run --rm --no-deps archi-export \
+  --xmlexchange.import "$MODEL_XML" \
+  --html.createReport "$REPORT_DIR"

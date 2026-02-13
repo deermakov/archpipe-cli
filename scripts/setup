@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+bold() { printf "\033[1m%s\033[0m\n" "$*"; }
+info() { printf "%s\n" "$*"; }
+warn() { printf "WARNING: %s\n" "$*"; }
+die() { printf "ERROR: %s\n" "$*" >&2; exit 1; }
+
+command -v docker >/dev/null 2>&1 || die "docker не найден. Установите Docker Desktop и повторите."
+
+if ! docker compose version >/dev/null 2>&1; then
+  die "docker compose недоступен. Обновите Docker Desktop (или установите docker-compose v2)."
+fi
+
+bold "Установка archpipe-cli (разово)"
+info "Repo: ${ROOT_DIR}"
+info ""
+
+bold "1) Сборка контейнера (archpipe)"
+docker compose -f "${ROOT_DIR}/docker-compose.yml" build archpipe
+info ""
+
+bold "2) Проверка запуска"
+docker compose -f "${ROOT_DIR}/docker-compose.yml" run --rm --no-deps archpipe --version >/dev/null 2>&1 \
+  || die "container failed to start. Check Docker daemon and retry."
+info "OK: контейнер archpipe запускается"
+info ""
+
+bold "Дальше: основные команды"
+info "1) Сгенерировать артефакты по одному HLD-файлу:"
+info "  ${ROOT_DIR}/archpipe generate inbox/your-hld.ir.md --format all --output-dir auto --notation standard --force"
+info ""
+info "2) Сгенерировать пачкой по папке (batch):"
+info "  ${ROOT_DIR}/archpipe generate inbox --format all --output-dir auto --notation standard --force"
+info ""
+info "3) Где результаты:"
+info "  ${ROOT_DIR}/output/<file-slug>/..."
+info ""
+warn "Подсказка: используйте --no-render-images, если нужны только исходники (.drawio/.puml) и надо быстрее."

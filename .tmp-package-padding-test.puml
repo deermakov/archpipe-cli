@@ -1,0 +1,20 @@
+@startuml
+!include <archimate/Archimate>
+!theme archimate-standard from <archimate/themes>
+skinparam linetype ortho
+skinparam packagePadding 40
+skinparam rectangle<<spacer>> {
+  BorderColor transparent
+  BackgroundColor transparent
+  FontColor transparent
+}
+package "P" {
+  rectangle " " as p_top <<spacer>>
+  Application_Component(a, "A")
+  Application_Component(b, "B")
+  rectangle " " as p_bottom <<spacer>>
+  p_top -down[hidden]-> a
+  a -down[hidden]-> b
+  b -down[hidden]-> p_bottom
+}
+@enduml

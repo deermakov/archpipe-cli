@@ -1,0 +1,58 @@
+version: "1.0"
+metadata:
+  title: "{{TITLE}}"
+  description: "Architecture description"
+  author: "Architecture Team"
+  date: "2026-02-06"
+  tags: ["microservices"]
+
+system:
+  name: "{{TITLE}}"
+  description: "Top-level system description"
+
+containers:
+  - id: web-app
+    name: "Web Application"
+    technology: "React"
+    description: "User-facing frontend"
+    type: container
+    tags: ["kind:client"]
+
+  - id: api
+    name: "API Service"
+    technology: "Python FastAPI"
+    description: "Primary backend API"
+    type: container
+    tags: ["kind:process", "role:sot-status"]
+    deployment:
+      platform: "Kubernetes"
+      scaling: auto
+      replicas: 3
+
+  - id: main-db
+    name: "Main Database"
+    technology: "PostgreSQL"
+    description: "System of record"
+    type: database
+    tags: ["kind:data"]
+
+relationships:
+  - from: web-app
+    to: api
+    description: "Calls backend APIs"
+    protocol: "HTTPS/REST"
+    patterns: ["read"]
+
+  - from: api
+    to: main-db
+    description: "Reads and writes business data"
+    protocol: "SQL"
+    patterns: ["read", "write"]
+
+external-systems: []
+integrations: []
+deployment-environments: []
+quality-attributes:
+  - attribute: availability
+    target: "99.9%"
+    measurement: "uptime"
